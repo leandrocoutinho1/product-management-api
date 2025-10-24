@@ -1,0 +1,220 @@
+type: collection.insomnia.rest/5.0
+name: Product Management API
+meta:
+  id: wrk_759c6a3cd1d345f28d7e178fe3915939
+  created: 1761331810223
+  modified: 1761331810223
+  description: ""
+collection:
+  - url: http://localhost:8000/auth/register
+    name: Registro -> auth/register/
+    meta:
+      id: req_b9cbd4b849ed4236ac09c65235e27772
+      created: 1761331838726
+      modified: 1761338339287
+      isPrivate: false
+      description: ""
+      sortKey: -1761331838726
+    method: POST
+    body:
+      text: '{   "username": "username",   "password": "password" }'
+      mimeType: application/json
+    headers:
+      - name: accept
+        value: application/json
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/auth/login
+    name: Login -> auth/login/
+    meta:
+      id: req_adbc135a5cab40efb0642e68356e87e7
+      created: 1761331887587
+      modified: 1761340870116
+      isPrivate: false
+      description: ""
+      sortKey: -1761331887587
+    method: POST
+    body:
+      text: '{   "username": "username",   "password": "password" }'
+      mimeType: application/json
+    headers:
+      - name: accept
+        value: application/json
+      - name: Content-Type
+        value: application/json
+    scripts:
+      preRequest: access_token = ""
+      afterResponse: |
+        const data = JSON.parse(insomnia.response.body);
+        const access_token = data.access_token;
+
+        await insomnia.environment.set("access_token", access_token);
+        console.log('✅ Token salvo no environment:', access_token);
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/api/produtos
+    name: Listar Produtos -> api/produtos/
+    meta:
+      id: req_e8974b839ad44beba404eb5950844bcf
+      created: 1761331961568
+      modified: 1761340892157
+      isPrivate: false
+      description: ""
+      sortKey: -1761331961568
+    method: GET
+    headers:
+      - name: accept
+        value: application/json
+        id: pair_a2e4cd1661ef4586af167f2df06eb670
+      - name: Authorization
+        value: Bearer {{access_token}}
+        id: pair_e323c0557b424ba381924526f12647ce
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/api/produtos
+    name: Criar Produto -> api/produtos
+    meta:
+      id: req_c58df1bb5f3548f9921a3ef357ad3980
+      created: 1761338323458
+      modified: 1761340941023
+      isPrivate: false
+      description: ""
+      sortKey: -1761338323458
+    method: POST
+    body:
+      text: '{   "name": "Mesa",   "price": 1000,   "category": "Móveis" }'
+      mimeType: application/json
+    headers:
+      - name: accept
+        value: application/json
+        id: pair_50c81d5efc354236ae63edd895fbc946
+      - name: Authorization
+        value: Bearer {{access_token}}
+        id: pair_eaeb07a2c7d54976a5471568861f8e69
+      - name: Content-Type
+        value: application/json
+        id: pair_c910cdeb00ce4a3692f97f42c89a6550
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/api/produtos/3
+    name: Buscar Produto por ID -> api/produtos/{id}
+    meta:
+      id: req_10931763dc404afb8c513ebd526a61ba
+      created: 1761338462088
+      modified: 1761340954077
+      isPrivate: false
+      description: ""
+      sortKey: -1761338462088
+    method: GET
+    headers:
+      - name: accept
+        value: application/json
+        id: pair_9e14cabf000e400aba731941e14dd8e4
+      - name: Authorization
+        value: Bearer {{access_token}}
+        id: pair_2d8ade2025f0457498b490a393e4611d
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/api/produtos/4
+    name: Atualizar Produto -> api/produtos/{id}
+    meta:
+      id: req_4f9963f618ae4a5faf306b1d0394875c
+      created: 1761338647303
+      modified: 1761340963820
+      isPrivate: false
+      description: ""
+      sortKey: -1761338647303
+    method: PUT
+    body:
+      text: '{   "name": "Mesa Gamer",   "price": 2000,   "category": "Móveis" }'
+      mimeType: application/json
+    headers:
+      - name: accept
+        value: application/json
+        id: pair_833c473a7661456288eef47606957d70
+      - name: Authorization
+        value: Bearer {{access_token}}
+        id: pair_0d9e1137c282447b90c585ac962619fb
+      - name: Content-Type
+        value: application/json
+        id: pair_d018b11c8bc8476a9700d7dbdabb36e9
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8000/api/produtos/1
+    name: Remover Produto -> api/produtos/{id}
+    meta:
+      id: req_94ec2c3fc99f48129cbd71b2f707279f
+      created: 1761338736065
+      modified: 1761340968937
+      isPrivate: false
+      description: ""
+      sortKey: -1761338736065
+    method: DELETE
+    headers:
+      - name: accept
+        value: application/json
+        id: pair_dc0cab5d432f44a4979d4a7619601cef
+      - name: Authorization
+        value: Bearer {{access_token}}
+        id: pair_eba93dce8d5240d2ac6f27e1e81f9c6e
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_e2e7db4665bf1486b8b712f9d182ed5f5d644487
+    created: 1761331810226
+    modified: 1761340848348
+environments:
+  name: Base Environment
+  meta:
+    id: env_e2e7db4665bf1486b8b712f9d182ed5f5d644487
+    created: 1761331810225
+    modified: 1761340848349
+    isPrivate: false
+  data:
+    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzYxMzQ0NDQ4fQ.OgX_jBJ21q40raOziuxP1jZcgdgvQ91nHyWmp5t57Nk
